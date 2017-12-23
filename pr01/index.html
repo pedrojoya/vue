@@ -9,11 +9,15 @@
 </head>
 <body>
   <main>
-    <h1>Soy el título</h1>
+    <h1 v-text="titulo"></h1>
+    <label for="txtMensaje">
+    <input id="txtMensaje" type="text" placeholder="(mensaje)" v-model="mensaje">
+    <p>{{mensaje}}</p>
+    <pre>{{$data}}</pre>
   </main>
 
   <!-- scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
   <script src="js/main.js"></script>  
 </body>
 </html>
