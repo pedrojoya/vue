@@ -5,3 +5,23 @@
 html {
   font-size: 62.5%;
 }
+
+table {
+  border-collapse: collapse;
+}
+
+td, th, tr {
+  border: solid 1px black;
+}
+
+td {
+  text-align: center;
+}
+
+th {
+  background-color: lightgray;
+}
+
+.suspenso {
+  color: red;
+}
