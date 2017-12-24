@@ -5,6 +5,7 @@ const vm = new Vue({
   data: {
     titulo: "Soy el título",
     mensaje: "",
+    urlFoto: "http://www.placehold.it/100x100",
     isSaludoChecked: false,
     alumnos: [
       {

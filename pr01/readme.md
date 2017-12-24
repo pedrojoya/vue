@@ -1,12 +1,18 @@
 # Qué es Vue
-Vue es un framework JavaScript. Su web oficial es https://vuejs.org/
+Vue es un framework JavaScript. Su web oficial es [https://vuejs.org/](https://vuejs.org/)
+Sus principales características son:
+* Es ligero, pesa muy poco.
+* Tiene una curva de aprendizaje sencilla.
+* Tiene mucha flexibilidad.
+* Tiene mejor rendimiento que Angular o React.
 # Instalación
-Para su instalación se recomienda usar un CDN, como https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js . Esta se trata de la versión no minificada, especial para desarrollo, que funciona con las Vue devtools de Chrome.
+Para empezar a trabajar con Vue se recomienda usar un CDN, como [https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js](https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js)
+En concreto ésta se trata de la versión de Vue no minificada, especial para desarrollo, que funciona con las Vue devtools de Chrome.
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
 <script src="js/miscript.js"></script>
 ```
-Para trabajar cómodo con Vue se recomienda instalar las Vue devtools para el navegador deseado, que podemos encontrar en https://github.com/vuejs/vue-devtools#vue-devtools
+Para trabajar cómodo con Vue se recomienda instalar las Vue devtools para el navegador deseado, que podemos encontrar en [https://github.com/vuejs/vue-devtools#vue-devtools](https://github.com/vuejs/vue-devtools#vue-devtools)
 # Creación de la instancia Vue
 Debemos crear una instancia Vue y pasarle un objeto de configuración. Dicho objeto tendrá una serie de propiedades:
 * `el`: Corresponderá al elemento del HTML con el que se vincula la instancia.
@@ -29,21 +35,36 @@ const vm = new Vue({
 ```
 # Directivas
 Las directivas son pseudoatributos HTML utilizados para indicar a Vue lo que debe hacer.
-# Comunicación desde el HTML al modelo de datos
-Con la directiva `v-model="variable_del_modelo"` asociamos el valor de una etiqueta input del HTML a una determinada variable del modelo de datos. Cada vez que el usuario cambie el valor de input se cambiará el valor de la variable. Por ejemplo:
-```html
-<input type="text" placeholder="(mensaje)" v-model="mensaje">
-```
-# Comunicación desde el modelo de datos al HTML
-Con la directiva `v-text="variable_del_modelo"` se asociamos el contenido de una etiqueta al valor de una variable del modelo, de manera que cuando cambia el valor de la variable se actualiza automáticamente en contenido de la etiqueta en tiempo de ejecución. Por ejemplo:
-```html
-<h1 v-text="titulo"></h1>
-```
-Otra alternativa es usar la sintaxis `{{variable_del_modelo}}` como si del contenido de la etiqueta se tratase. Por ejemplo:
+# Interpolación de variables y funciones.
+Usando la sintaxis `{{variable_del_modelo}}` haremos que el contenido de la etiqueta corresponde al valor de la variable. Por ejemplo:
 ```html
 <p>
   {{mensaje}}
 </p>
+```
+De igual forma, con la sintáxis  `{{método()}}` haremos que el valor retornado por el método se muestre como contenido de la etiqueta. Por ejemplo:
+```html
+<p>
+  {{mostrarAyuda()}}
+</p>
+```
+Si el método de acceder al modelo usaremos dentro de ella la palabra reservada `this`, que, a pesar de estar dentro de una función, Vue habrá asociado al modelo.
+# Vinculación de contenido
+Con la directiva `v-text="expr_modelo"` asociamos el contenido de una etiqueta al resultado de una expresión del modelo, de manera que cuando cambie el valor de algún elemento de la expresión, como una variable del modelo, se actualizará automáticamente en contenido de la etiqueta en tiempo de ejecución. Por ejemplo:
+```html
+<h1 v-text="titulo"></h1>
+```
+Utilizaremos esta directiva frente a la sintaxis `{{var_modelo}}` cuando la expresión determine el contenido al completo de la etiqueta.
+# Vinculación de atributos de etiquetas
+Con la directiva `v-bind:atributo="expr_modelo"` hacemos que el valor del atributo especificado de la etiqueta corresponda al valor al que se evalúa la expresión del modelo. 
+Vue nos permite acortar la sintaxis de la directiva anterior simplemente indicando `:atributo`. Por ejemplo:
+```html
+<img v-bind:src="urlFoto" :alt="mensaje">
+```
+# Comunicación desde el HTML al modelo de datos
+Con la directiva `v-model="variable_del_modelo"` asociamos el valor de una etiqueta input del HTML a una determinada variable del modelo de datos. Cada vez que el usuario cambie el valor de input se cambiará el valor de la variable. Por ejemplo:
+```html
+<input type="text" placeholder="(mensaje)" v-model="mensaje">
 ```
 # Renderizado condicional
 Con la directiva `v-show="expr_booleana_modelo"` podemos hacer que una etiqueta se muestre o no dependiendo de una condición. Lo que hace es poner `display: none`. Por ejemplo:
@@ -172,13 +193,12 @@ const vm = new Vue({
 });
 ```
 # Vinculación de clases
-Con la directiva ```v-bind:class="{ clase: expr_booleana_modelo }"``` podemos establecer o quitar una clase de la etiqueta corresondiente dependiendo del modelo. El valor pasado a la directiva es un objeto donde los nombres de las propiedades son las clases y los valores de las propiedades las expresiones booleanas. Por ejemplo:
-```javascript
+Con la directiva ```v-bind:class="{ clase: expr_booleana_modelo }"``` podemos establecer o quitar una clase de la etiqueta correspondiente dependiendo del modelo. El valor pasado a la directiva es un objeto donde los nombres de las propiedades son las clases y los valores de las propiedades las expresiones booleanas. Por ejemplo:
+```html
 // Activa la clase suspenso si el alumno no está aprobado.
 <tr v-for="(alumno, index) in alumnos" v-bind:class="{ suspenso: !alumno.aprobado }">
 ```
-Vue nos permite realizar usar la directiva ```v-bind:class``` con una sintaxis más corta, mediante ```:class```. Así, el ejemplo anterior quedaría como:
-```javascript
+Podemos usar la sintaxis corta ```:class```:
+```html
 <tr v-for="(alumno, index) in alumnos" :class="{ suspenso: !alumno.aprobado }">
 ```
-

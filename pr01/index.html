@@ -12,7 +12,10 @@
     <h1 v-text="titulo"></h1>
     <label for="txtMensaje">Mensaje</label>
     <input id="txtMensaje" type="text" placeholder="(mensaje)" v-model.trim="mensaje">
-    <p>{{mensaje}}</p>
+    <p>
+      {{mensaje}}
+      <img v-bind:src="urlFoto" :alt="mensaje">
+    </p>
     <label for="chkSaludo">Mostrar saludo</label>
     <input type="checkbox" id="chkInsult" v-model="isSaludoChecked">
     <h2 v-show="isSaludoChecked">Aquí viene el saludo</h2>
