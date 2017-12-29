@@ -15,78 +15,97 @@
 </head>
 <body>
   <main class="markdown-body">
-    <h1>Vinculación bidireccional</h1>
-    <p>Mediante la directiva <pre><code>v-model="var_modelo"</code></pre> hacemos que el texto introducido por el usuario en el input será vinculado con la variable indicada del modelo de datos.</p>
-    <p>Mediante la directiva <pre><code>v-text="expr"</code></pre> hacemos que el resultado de evaluar la expresión se establezca como contenido de la etiqueta</p>
-    <p>Usando <pre><code>{{expr}}</code></pre> dentro del contenido de una etiqueta hacemos que se evalúe la expresión y se muestre su resultado</p>
-    <p>Por ejemplo, el texto introducido en el siguiente cuandro de texto será almacenado en una variable del modelo que será mostrado en los dos párrafos siguientes</p>
-    <output>
-      <label for="txtMensaje">Mensaje</label>
-      <input id="txtMensaje" type="text" placeholder="(mensaje)" v-model.trim="mensaje">
-      <p v-text="mensaje"></p>
-      <p>La variable mensaje del modelo de datos vale: {{mensaje}}</p>  
-    </output>
-    <h1>Vinculación de atributos</h1>
-    <p>Mediante la directiva <code>v-bind:atributo="expr"</code>. Dicha directiva puede ser acortada usando <code>:atributo="expr"</code>. Puede ser usada con cualquier atributo</p>
-    <p><img v-bind:src="urlFoto" :alt="mensaje"></p>
-    <h1>Renderizado condicional</h1>
-    <label for="chkSaludo">Mostrar saludo</label>
-    <input type="checkbox" id="chkSaludo" v-model="isSaludoChecked">
-    <h2 v-show="isSaludoChecked">Aquí viene el saludo</h2>
-    <p v-if="isSaludoChecked">Quillo que</p>
-    <p v-else>No te saludo porque no quiero</p>
-    <template v-if="isSaludoChecked">
-      <p>Maneras de saludar:</p>
-      <ul>
-        <li>Buenos días tenga usted</li>
-        <li>Hola, ¿cómo está usted?</li>
-        <li>Quillo que</li>
-      </ul>
-    </template>
-    <table>
-      <caption>Alumnado</caption>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Edad</th>
-          <th>Opciones</th>
-        </tr>
-      </thead>
-      <tr v-for="(alumno, index) in alumnos" v-bind:class="{ suspenso: !alumno.aprobado }">
-        <td v-text="alumno.nombre"></td>
-        <td v-text="alumno.edad"></td>
-        <td><a href="#" v-on:click="eliminarAlumno(index)">Borrar</a><a href="#" v-on:click="toggleAprobado(alumno)" v-text="alumno.aprobado ? 'Suspender' : 'Aprobar'"></a></td>
-      </tr>
-    </table>
-    <label for="txtNombre">Nombre</label>
-    <input type="text" id="txtNombre" v-model.trim="nuevoAlumno.nombre">
-    <label for="txtEdad">Edad</label>
-    <input type="number" id="txtEdad" min="1" max="130" v-model.number="nuevoAlumno.edad">
-    <button @click="agregarAlumno">Agregar alumno</button>
-    <table>
-        <caption>Alumnado mayor de edad</caption>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Aprobado</th>
+    <section>
+      <h1>Vinculación bidireccional e interpolación</h1>
+      <output>
+        <p>
+          <label for="txtMensaje">Mensaje</label>
+          <input id="txtMensaje" type="text" placeholder="(mensaje)" v-model.trim="mensaje">
+        </p>
+        <p>Mensaje: <span v-text="mensaje"></span></p>
+        <p>Mensaje: {{mensaje}}</p>  
+      </output>
+    </section>
+    <section>
+      <h1>Vinculación de atributos</h1>
+      <output>
+        <img v-bind:src="urlFoto" :alt="mensaje">
+      </output>
+    </section>
+    <section>
+      <h1>Renderizado condicional</h1>
+      <output>
+        <p>
+          <label for="chkSaludo">Mostrar saludo</label>
+          <input type="checkbox" id="chkSaludo" v-model="isSaludoChecked">
+        </p>
+        <p v-show="isSaludoChecked">Quillo que</p>
+        <p v-if="isSaludoChecked">Quillo que</p>
+        <p v-else>No saludar</p>
+        <template v-if="isSaludoChecked">
+          <p>Maneras de saludar:</p>
+          <ul>
+            <li>Buenos días tenga usted</li>
+            <li>Hola, ¿cómo está usted?</li>
+            <li>Quillo que</li>
+          </ul>
+        </template>
+      </output>
+    </section>
+    <section>
+      <h1>Renderizado de listas, vinculación de clases y eventos</h1>
+      <output>
+        <table>
+          <caption>Alumnado</caption>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tr v-for="(alumno, index) in alumnos" v-bind:class="{ suspenso: !alumno.aprobado }">
+            <td v-text="alumno.nombre"></td>
+            <td v-text="alumno.edad"></td>
+            <td>
+              <button v-on:click="eliminarAlumno(index)">Borrar</button>
+              <button href="#" v-on:click="toggleAprobado(alumno)" v-text="alumno.aprobado ? 'Suspender' : 'Aprobar'"></button>
+            </td>
           </tr>
-        </thead>
-        <tr v-for="(alumno, index) in alumnosMayores">
-          <td v-for="(value, key) in alumno">{{key}}: {{value}}</td>
-        </tr>
-      </table>
-      <form v-on:submit.prevent="agregarAlumno">
-        <label for="txtNombre2">Nombre</label>
-        <input type="text" id="txtNombre2" v-model="nuevoAlumno.nombre">
-        <label for="txtEdad2">Edad</label>
-        <input type="number" id="txtEdad2" min="1" max="130" v-model="nuevoAlumno.edad">
-        <input type="submit" value="Agregar alumno">
-        Años hasta jubilación: <span v-text="jubilacion"></span>
-      </form>
-      <p>Alumnos aprobados: {{alumnosAprobados.length}}</p>
-      <hr>
+        </table>
+        <label for="txtNombre">Nombre</label>
+        <input type="text" id="txtNombre" v-model.trim="nuevoAlumno.nombre">
+        <label for="txtEdad">Edad</label>
+        <input type="number" id="txtEdad" min="1" max="130" v-model.number="nuevoAlumno.edad">
+        <label for="chkAprobado">Aprobado</label>
+        <input type="checkbox" id="chkAprobado" v-model="nuevoAlumno.aprobado">
+        <button @click="agregarAlumno">Agregar alumno</button>
+      </output>
+    </section>
+    <section>
+      <h1>Computed properties</h1>
+      <output v-if="alumnosAprobados.length > 0">
+        <table>
+          <caption>Alumnado aprobado</caption>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Aprobado</th>
+            </tr>
+          </thead>
+          <tr v-for="(alumno, index) in alumnosAprobados">
+            <td v-for="(value, key) in alumno">{{key}}: {{value}}</td>
+          </tr>
+        </table>
+        <p>Alumnos aprobados: {{alumnosAprobados.length}}</p>
+      </output>
+      <p v-else>No hay ningún alumno aprobado</p>
+    </section>
+    <section>
+      <h1>Modelo</h1>
       <pre><code>{{$data}}</code></pre>
+    </section>
   </main>
 
   <!-- scripts -->

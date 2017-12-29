@@ -3,7 +3,6 @@ const vm = new Vue({
   el: "main",
   // Modelo de datos.
   data: {
-    titulo: "Soy el título",
     mensaje: "",
     urlFoto: "http://www.placehold.it/100x100",
     isSaludoChecked: false,
@@ -16,19 +15,19 @@ const vm = new Vue({
       {
         nombre: "Germán Ginés",
         edad: 17,
-        aprobado: false
+        aprobado: true
       },
       {
         nombre: "Rodolfo",
         edad: 20,
         aprobado: false
-      }
+      },
     ],
     nuevoAlumno: {
       nombre: "",
       edad: 18,
       aprobado: false
-    }
+    },
   },
   // Métodos que pueden acceder al modelo.
   methods: {

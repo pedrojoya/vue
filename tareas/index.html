@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Lista de tareas</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <div class="container">
+      <h1>Tareas</h1>
+      <div class="row">
+        <div class="col">
+          <!-- Tabla de tareas -->
+          <div class="table-responsive">
+            <table class="table table-bordered">
+                <caption>Lista de tareas</caption>
+                <thead>
+                  <tr>
+                    <td>#</td>
+                    <td>Tarea</td>  
+                    <td>Opciones</td>                      
+                  </tr>
+                </thead>
+                <tr v-for="(tarea, index) in tareas">
+                  <td>{{index + 1}}</td>
+                  <td>{{tarea.texto}}</td>
+                  <td><img src="open-iconic/svg/trash.svg" width="20"></td>
+                </tr>
+            </table>
+          </div>
+          <!-- Formulario -->
+          <form @submit.prevent="agregarTarea">
+            <div class="form-group">
+              <label for="txtTextoTarea">Tarea</label>
+              <input type="text" class="form-control" id="txtTextoTarea" placeholder="Texto de la tarea" v-model="nuevaTarea.texto">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Vue -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+  <!-- Bootstrap-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script> 
+  <!-- Main.js -->
+  <script src="js/main.js"></script> 
+</body>
+</html>

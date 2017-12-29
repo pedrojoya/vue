@@ -1,3 +1,18 @@
+# Introducción a Vue
+- [Qué es Vue](#que-es-vue)
+- [Instalación](#instalacion)
+- [Instancia Vue](#instancia-vue)
+- [Ciclo de vida de una instancia Vue](#ciclo-de-vida-de-una-instancia-vue)
+- [Plantillas](#plantillas)
+- [Directivas](#directivas)
+- [Vinculación de contenido](#vinculacion-de-contenido)
+- [Vinculación de atributos](#vinculacion-de-atributos)
+- [Vinculación bidireccional](#vinculacion-bidireccional)
+- [Renderizado condicional](#renderizado-condicional)
+- [Renderizado de listas](#renderizado-de-listas)
+- [Eventos](#eventos)
+- [Computed properties](#computed-properties)
+- [Vinculación de clases](#vinculacion-de-clases)
 # Qué es Vue
 Vue (pronunciado /vjuː/ en inglés, como *view*) es un framework Javascript para construir interfaces de usuario. 
 Su web oficial es [https://vuejs.org/](https://vuejs.org/).
@@ -10,7 +25,7 @@ Sus principales características son:
 Para empezar a trabajar con Vue se recomienda usar un CDN (*Content Delivery Network*, red de distribución de contenido), como por ejemplo:
 [https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js](https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js).
 
-En concreto esta versión de Vue corresponde a una versión no minificada, que es la remomendada para desarrollo, y que funciona correctamente con las Vue devtools de Chrome.
+> En concreto esta versión de Vue corresponde a una versión no minificada, que es la remomendada para desarrollo, y que funciona correctamente con las Vue devtools de Chrome.
 
 Insertaremos el script de Vue correspondiente en nuestro documento HTML, antes del script con nuestro código.
 ```html
@@ -238,10 +253,6 @@ const vm = new Vue({
       this.alumnos.push(JSON.parse( JSON.stringify(this.nuevoAlumno)));
       this.nuevoAlumno.nombre = "",
       this.nuevoAlumno.edad = 18
-      // `event` es el evento nativo del DOM, que es pasado automáticamente.
-      if (event) {
-        alert(event.target.tagName)
-      }    
     },
     eliminarAlumno(indice) {
       this.alumnos.splice(indice, 1);
@@ -274,34 +285,29 @@ También tenemos disponibles una serie de modificadores de la directiva, que per
 ```html
 <form v-on:submit.prevent="agregarAlumno">
 ```
-# Propiedades calculadas (computed)
+# Computed properties
 Con objeto de no llevarnos demasiado lógica a la vista (a las directivas de las etiquetas HTML), podemos crear las conocidas como *computed properties* o propiedades calculadas, que no dejan de ser atributos correspondientes a funciones que calculan un valor a partir de alguna variable del modelo.
-
-Las *computed properties* solo son recalculadas cuando cambian las propiedades del modelo de las que dependen, a diferencia de los métodos (*methods*), que siempre son evaluados.
 Las propiedades calculadas se definen en la propiedad ```computed``` dentro de la instancia Vue. Por ejemplo:
 ```javascript
 const vm = new Vue({
-  // Elemento con el que se vincula la instancia Vue
-  el: "main",
-  // Modelo de datos.
+  el: 'main',
   data: {
-    nuevoAlumno: {
-      nombre: "",
-      edad: 18
-    }
+    mensaje: 'Hola'
   },
-  // Métodos que pueden acceder al modelo.
-  methods: {
-
-  },
-  // Propiedades calculadas (dependientes del modelo).
   computed: {
-    jubilacion() {
-      return 65 - this.nuevoAlumno.edad;
+    mensajeAlReves() {
+      // `this` apunta a la instancia de vm
+      return this.mensaje.split('').reverse().join('');
     }
   }
-});
+})
 ```
+Las propiedades calculadas se usan tal y como se haría con una propiedades del modelo.
+```html
+<p>Mensaje original: "{{ mensaje }}"</p>
+<p>Mensaje al revés: "{{ mensajeAlReves }}"</p>
+```
+Las *computed properties* solo son recalculadas cuando cambian las propiedades del modelo de las que dependen, su valor es cacheado basándose en sus dependencias. Por el contrario, los métodos (*methods*) son ejecutados cada vez que se renderiza un elemento que haga uso de él.
 # Vinculación de clases
 Con la directiva ```v-bind:class="{ clase: expr_booleana_modelo }"``` podemos establecer o quitar una clase de la etiqueta correspondiente dependiendo del modelo. El valor pasado a la directiva es un objeto donde los nombres de las propiedades son las clases y los valores de las propiedades las expresiones booleanas. Por ejemplo:
 ```html
