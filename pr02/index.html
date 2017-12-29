@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Vue - PR02 - Transiciones</title>
+</head>
+<body>
+  <main id="principal">
+    <h1>Transiciones</h1>
+    <label for="chkMostrar">Mostrar saludo</label>
+    <input type="checkbox" id="chkMostrar" v-model="isSaludoChecked">
+    <transition name="saludo">
+      <div v-if="isSaludoChecked">
+        <p>Maneras de saludar:</p>
+        <ul>
+          <li>Buenos días tenga usted</li>
+          <li>Hola, ¿cómo está usted?</li>
+          <li>Quillo que</li>
+        </ul>
+      </div>
+    </transition>
+
+    <hr>
+    <pre>{{$data}}</pre>
+  </main>
+
+  <!-- scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+  <script src="js/main.js"></script>  
+</body>
+</html>

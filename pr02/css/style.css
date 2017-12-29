@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* Cuando ya está añadido o cuando ya está quitado */
+.saludo-enter-active, .saludo-leave-active {
+  transition: all 2s;
+}
+
+/* Justo antes de añadirlo o justo antes de quitarlo */
+.saludo-enter {
+  opacity: 0;
+}
+
+.saludo-leave-to {
+  transform: translateX(-200px);
+}
