@@ -1,0 +1,46 @@
+.page-title {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.tarea--icono {
+  width: 1.2rem;
+  margin-left: .8rem;
+  cursor: pointer;
+}
+
+.terminada {
+  text-decoration: line-through;
+}
+
+.editandocelda {
+  outline-color: rgb(77, 144, 254);
+  outline-offset: -2px;
+  outline-style: auto;
+  outline-width: 5px;
+}
+
+.editando--input {
+  /* padding: .75rem; */
+  display: block;
+  width: 100%;
+  outline: none;
+  border: none;
+}
+
+.ordenable {
+  cursor: pointer;
+}
+
+table {
+  table-layout:fixed;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.w-30 {
+  width: 30%;
+}

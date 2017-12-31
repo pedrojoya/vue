@@ -11,27 +11,69 @@
 <body>
   <main>
     <div class="container">
-      <h1>Tareas</h1>
+      <h1 class="page-title">Tareas</h1>
+      <div class="row mb-4">
+        <div class="col">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Filtrar</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Texto de la tarea" v-model="textoFiltro">
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col">
           <!-- Tabla de tareas -->
-          <div class="table-responsive">
+          <div class="table-responsive" v-if="tareasFiltradas.length > 0">
             <table class="table table-bordered">
-                <caption>Lista de tareas</caption>
                 <thead>
                   <tr>
-                    <td>#</td>
-                    <td>Tarea</td>  
-                    <td>Opciones</td>                      
+                    <th class="ordenable w-10" title="Ordenar" @click="ordenarPor('num')">
+                      # 
+                      <img src="open-iconic/svg/caret-bottom.svg" alt="" v-if="orden.propiedad === 'num' && orden.sentido === 'asc'">
+                      <img src="open-iconic/svg/caret-top.svg" alt="" v-if="orden.propiedad === 'num' && orden.sentido === 'desc'">
+                    </th>
+                    <th class="ordenable" title="Ordenar" @click="ordenarPor('texto')">
+                      Tarea
+                      <img src="open-iconic/svg/caret-bottom.svg" alt="" v-if="orden.propiedad === 'texto' && orden.sentido === 'asc'">
+                      <img src="open-iconic/svg/caret-top.svg" alt="" v-if="orden.propiedad === 'texto' && orden.sentido === 'desc'">
+                    </th>  
+                    <th class="w-30">Opciones</th>                      
                   </tr>
                 </thead>
-                <tr v-for="(tarea, index) in tareas">
-                  <td>{{index + 1}}</td>
-                  <td>{{tarea.texto}}</td>
-                  <td><img src="open-iconic/svg/trash.svg" width="20"></td>
+                <tr v-for="(tarea, index) in tareasOrdenadas">
+                  <td :class="{terminada: tarea.terminada}">{{tarea.num}}</td>
+                  <td :class="{editandocelda: tarea.editando}">
+                    <div v-if="!tarea.editando" :class="{terminada: tarea.terminada}" @click="editarTarea(tarea)">{{tarea.texto}}</div>
+                    <input class="editando--input" :id="'tarea'+tarea.num" v-else v-model="textoTareaEditada" @keyup.enter="guardarTarea(tarea)">
+                  </td>
+                  <td>
+                    <template v-if="!tarea.terminada">
+                      <template v-if="!tarea.editando">
+                        <!-- Editar -->
+                        <img class="tarea--icono" src="open-iconic/svg/pencil.svg" title="Editar" @click="editarTarea(tarea)">   
+                        <!-- Terminar -->
+                        <img class="tarea--icono" src="open-iconic/svg/check.svg" title="Completada" @click="toggleTareaTerminada(tarea)">
+                      </template>
+                      <template v-else>
+                        <!-- Guardar -->
+                        <img class="tarea--icono" src="open-iconic/svg/circle-check.svg" title="Guardar" @click="guardarTarea(tarea)">
+                        <!-- Cancelar -->
+                        <img class="tarea--icono" src="open-iconic/svg/circle-x.svg" title="Cancelar" @click="cancelarTarea(tarea)">
+                      </template>
+                    </template>
+                    <template v-else>
+                      <!-- Undo -->
+                      <img class="tarea--icono" src="open-iconic/svg/action-undo.svg" v-if="!tarea.editando" title="No completada" @click="toggleTareaTerminada(tarea)">
+                    </template>
+                    <!-- Eliminar -->
+                    <img class="tarea--icono" src="open-iconic/svg/trash.svg" title="Eliminar" v-if="!tarea.editando" @click="eliminarTarea(tarea)">
+                  </td>
                 </tr>
             </table>
           </div>
+          <p v-else>No hay tareas</p>
           <!-- Formulario -->
           <form @submit.prevent="agregarTarea">
             <div class="form-group">
@@ -39,7 +81,8 @@
               <input type="text" class="form-control" id="txtTextoTarea" placeholder="Texto de la tarea" v-model="nuevaTarea.texto">
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary" :disabled="nuevaTarea.texto === ''">Agregar</button>
+              <a href="#" v-if="numTareasTerminadas > 0" @click="eliminarTareasTerminadas">Eliminar completadas</a>
             </div>
           </form>
         </div>
