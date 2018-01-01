@@ -8,15 +8,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css">
   <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <link rel="stylesheet" href="css/highlight.css">
+  <link rel="stylesheet" href="css/github.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
-  <title>Vue - PR01</title>
+  <title>Vue - PR01 - Introducción</title>
 </head>
 <body>
   <main class="markdown-body">
+    <h1>Vue - PR01 - Introducción</h1>
+
     <section>
-      <h1>Vinculación bidireccional e interpolación</h1>
+      <h2>Vinculación bidireccional e interpolación</h2>
       <output>
         <p>
           <label for="txtMensaje">Mensaje</label>
@@ -26,21 +30,23 @@
         <p>Mensaje: {{mensaje}}</p>  
       </output>
     </section>
+
     <section>
-      <h1>Vinculación de atributos</h1>
+      <h2>Vinculación de atributos</h2>
       <output>
         <img v-bind:src="urlFoto" :alt="mensaje">
       </output>
     </section>
+
     <section>
-      <h1>Renderizado condicional</h1>
+      <h2>Renderizado condicional</h2>
       <output>
         <p>
           <label for="chkSaludo">Mostrar saludo</label>
           <input type="checkbox" id="chkSaludo" v-model="isSaludoChecked">
         </p>
         <p v-show="isSaludoChecked">Quillo que</p>
-        <p v-if="isSaludoChecked">Quillo que</p>
+        <p v-if="isSaludoChecked">¿Cómo estás?</p>
         <p v-else>No saludar</p>
         <template v-if="isSaludoChecked">
           <p>Maneras de saludar:</p>
@@ -52,8 +58,9 @@
         </template>
       </output>
     </section>
+
     <section>
-      <h1>Renderizado de listas, vinculación de clases y eventos</h1>
+      <h2>Renderizado de listas, vinculación de clases y eventos</h2>
       <output>
         <table>
           <caption>Alumnado</caption>
@@ -82,8 +89,9 @@
         <button @click="agregarAlumno">Agregar alumno</button>
       </output>
     </section>
+
     <section>
-      <h1>Computed properties</h1>
+      <h2>Computed properties</h2>
       <output v-if="alumnosAprobados.length > 0">
         <table>
           <caption>Alumnado aprobado</caption>
@@ -102,8 +110,22 @@
       </output>
       <p v-else>No hay ningún alumno aprobado</p>
     </section>
+
     <section>
-      <h1>Modelo</h1>
+      <h2>Efectos de transición</h2>
+      <output>
+        <p>
+          <label for="chkSaludo">Mostrar saludo</label>
+          <input type="checkbox" id="chkSaludo" v-model="isSaludoChecked">
+        </p>
+        <transition name="saludo">
+          <p v-if="isSaludoChecked">Quillo que</p>
+        </transition>
+      </output>
+    </section>
+
+    <section>
+      <h2>Modelo</h2>
       <pre><code>{{$data}}</code></pre>
     </section>
   </main>

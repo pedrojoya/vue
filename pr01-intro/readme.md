@@ -13,6 +13,7 @@
 - [Eventos](#eventos)
 - [Computed properties](#computed-properties)
 - [Vinculación de clases](#vinculacion-de-clases)
+- [Efectos de transición](#efectos-de-transicion)
 # Qué es Vue
 Vue (pronunciado /vjuː/ en inglés, como *view*) es un framework Javascript para construir interfaces de usuario. 
 Su web oficial es [https://vuejs.org/](https://vuejs.org/).
@@ -309,7 +310,7 @@ Las propiedades calculadas se usan tal y como se haría con una propiedades del 
 ```
 Las *computed properties* solo son recalculadas cuando cambian las propiedades del modelo de las que dependen, su valor es cacheado basándose en sus dependencias. Por el contrario, los métodos (*methods*) son ejecutados cada vez que se renderiza un elemento que haga uso de él.
 # Vinculación de clases
-Con la directiva ```v-bind:class="{ clase: expr_booleana_modelo }"``` podemos establecer o quitar una clase de la etiqueta correspondiente dependiendo del modelo. El valor pasado a la directiva es un objeto donde los nombres de las propiedades son las clases y los valores de las propiedades las expresiones booleanas. Por ejemplo:
+Con la directiva ```v-bind:class="{ clase: expr_booleana_modelo }"``` podemos establecer o quitar una clase de la etiqueta correspondiente dependiendo del modelo. El valor pasado a la directiva es un objeto donde los nombres de las propiedades son las clases y los valores de las propiedades las expresiones booleanas del modelo. Por ejemplo:
 ```html
 // Activa la clase suspenso si el alumno no está aprobado.
 <tr v-for="(alumno, index) in alumnos" v-bind:class="{ suspenso: !alumno.aprobado }">
@@ -317,4 +318,52 @@ Con la directiva ```v-bind:class="{ clase: expr_booleana_modelo }"``` podemos es
 Podemos usar la sintaxis corta ```:class```:
 ```html
 <tr v-for="(alumno, index) in alumnos" :class="{ suspenso: !alumno.aprobado }">
+```
+El objeto que se asigna como valor de la directiva NO tiene por qué definirse inline, sino que puede corresponder a un objeto del modelo o una computed property.
+Tenemos disponible una sintaxis alternativa para esta directiva, en la que se le asigna como valor un array de expresiones correspondientes a los nombres de las clases con las que debe mostrarse el elemento. Por ejemplo:
+```html
+<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+```
+# Efectos de transición
+Vue proporciona varias maneras de aplicar efectos de transición cuando nuevos elementos son insertados, actualizados o quitados del DOM.
+Mediante el componente ```<transition name="nombre_trans">``` podemos hacer que las transciones al mostrar u ocultar elementos sean mucho más elegantes.
+
+Cuando un elemento encerrado en un componente transition es insertado o eliminado del DOM, Vue verificará automáticamente si el elemento objetivo tiene transiciones CSS aplicadas o no. Si tiene, las clases CSS para estas transiciones serán agregadas/quitadas en el momento oportuno. Si no se detectan transiciones/animaciones CSS, las operaciones para la inserción y/o eliminación del DOM serán ejecutadas inmediatamente. 
+Hay seis clases aplicadas a las transiciones de entrada/salida. Los sufijos de las clases para cuando se agrega un elemento al DOM son:
+- `enter`: Estado inicial para la transición de entrada. Se agrega antes que el elemento sea insertado, y se quita un *frame* después.
+- `enter-active`: Estado activo para la entrada. Es aplicada durante la fase de entrada completa. Se agrega antes que el elemento sea insertado, se quita cuando la transición/animación finaliza. Esta clase puede ser usada para definir la duración, *delay* y curva de aplicación para la transición de entrada.
+- `enter-to`: Estado final para la entrada. Se agrega un marco después de haber insertado el elemento (al mismo tiempo que v-enter es removida), se quita cuando la transición/animación finaliza.
+Los sufijos de las clases para cuando se elimina un elemento del DOM son:
+- `leave`: Estado inicial para la salida. Se agrega inmediatamente cuando se dispara una transición de salida, se quita pasado un *frame*.
+- `leave-active`: Estado activo para la salida. Es aplicada durante la fase de salida al completo. Se agrega inmediatamente cuando una transición de salida es disparada, y se quita cuando la transición/animación finaliza. Esta clase puede ser usada para definir la duración, *delay* y la curva de aplicación para la transición de salida.
+- `leave-to`: Estado final para la salida. Se agrega un *frame* despúes de que se dispare la transición de salida (al mismo tiempo que `leave` es quitada), y se quita cuando la transición/animación finaliza.
+
+Una de las alternativas es transiciones CSS. Para ello primero tendremos que incluir las etiquetas que puedan ser añadidas o eliminadas del DOM dentro de un componente `<transition>`. Por ejemplo:
+```html
+<transition name="saludo">
+  <p v-if="isSaludoChecked">Quillo que</p>
+</transition>
+``` 
+Y luego definir las clases CSS que deben emplearse en la transición, cuyo nombre debe comenzar con el nombre de la transición y tener como sujijo alguno de los explicados anteriormente. Por ejemplo:
+```css
+/* Al iniciar la transición de entrada */
+.saludo-enter {
+  transform: translateX(10px);
+  opacity: 0;
+}
+/* Durante la transición de entrada, antes de añadir el elemento al DOM */
+.saludo-enter-active {
+  transition: all 2s;
+}
+
+/* Durante la transición de salida */
+.saludo-leave-active {
+  transition: all 2s;
+}
+/* Al finalizar la transición de salida, 
+   justo antes de quitar el elemento del DOM */
+.saludo-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
 ```

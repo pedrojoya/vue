@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css">
+    <link rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="css/highlight.css">
+    <link rel="stylesheet" href="css/github.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <title>Vue - PR03 - Componentes</title>
+</head>
+<body>
+  <main id="principal" class="markdown-body">
+    <h1>Vue - PR03 - Componentes</h1>
+  
+    <section>
+      <h2>Componente con solo template</h2>
+      <mi-texto></mi-texto>
+    </section>
+    
+    <section>
+        <h2>Componente con data y methods</h2>
+        <contador></contador>
+    </section>
+
+    <section>
+        <h2>Componente con propiedades</h2>
+        <mi-texto-2 el-texto="Soy el componente mi-texto-2"></mi-texto-2>
+    </section>
+
+    <section>
+        <h2>Componente con propiedades cuyo valor es una expresión</h2>
+        <label for="txtMensaje">Mensaje</label>
+        <input type="text" id="txtMensaje" placeholder="(mensaje)" v-model="mensaje">
+        <mi-texto-2 :el-texto="mensaje"></mi-texto-2>
+    </section>
+
+    <section>
+      <h2>Componente con propiedades como valor inicial y computed properties</h2>
+      <label for="txtTextoBoton">Texto del botón</label>
+      <input type="text" id="txtTextoBoton" placeholder="(texto botón)" v-model="textoBoton">
+      <contador-2 :inicial="1" :incremento="2" :texto="textoBoton"></contador-2>
+    </section>
+  
+    <section>
+      <h2>Componente con propiedades validadas</h2>
+      <contador-3 :incremento="5" texto="Incrementar"></contador-3>
+    </section>
+
+  </main>
+  
+  <!-- scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+  <script src="js/main.js"></script>  
+        
+</body>
+</html>
